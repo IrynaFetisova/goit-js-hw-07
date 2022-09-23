@@ -26,16 +26,18 @@ function showPicture (event) {
     };
 
     const instance = basicLightbox.create(`
-    <img src="${event.target.dataset.source}" width="800" height="600">`);
-    instance.show();
-
-    document.addEventListener("keydown", (event) => {
-        if (event.code === "Escape") {
-            instance.close();
-        }
+    <img src="${event.target.dataset.source}" width="800" height="600">`, {
+      onShow: () => {
+        document.addEventListener("keydown", PressEsc);
+      },
+      onClose: () => {
+        document.removeEventListener("keydown", PressEsc);
+      },
     });
+    instance.show();
 };
 
 function blockStandartAction(event) {
     event.preventDefault()
 };
+
